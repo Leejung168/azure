@@ -1,0 +1,15 @@
+####项目背景
+A公司计划将公司的系统从本地机房迁移到Azure。经过协商，项目架构图已经落地。
+
+####架构图：
+![Project Diagram] (https://raw.githubusercontent.com/Leejung168/azure/master/TestProject1.png)
+
+####项目需求：
+1. 为了统一管理，公司计划将购买的域名托管在Azure DNS中。
+2. 考虑到后期的业务增长和高可用性，计划使用Traffic Manager作为流量的分发。
+3. 通过AppGw作为七层的负载均衡器，要求SSL Offload。并且将所有客户的HTTP访问重定向到HTTPS。
+4. 通过IPSec将本地办公网络和Azure VNets{Prod, Dev}打通， 并且要使用BGP交换路由。
+5. 内部用户访问系统要通过Internal的LB， 访问的URL为：https://www.internal.oaas.top。
+6. 移动用户通过P2S访问Azure的服务器做管理操作。
+7. 为了安全审计，所有AzureVM的Internet访问必须经过Azure Firewall。 并且只能访问https://www.microsoft.com/。
+

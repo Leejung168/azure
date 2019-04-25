@@ -48,15 +48,12 @@ def main(LogFile, StateFile):
        logss = logs.split("\n")
        for i in logss:
            if "TCP_MISS/404" in i:
-               print i
                count = count + 1
 
-    print Count
     if count > Count:
-       print count
-       os.system("sudo tcpdump -G 10 -W 1 -w /tmp/`hostname`+`date +%Y%m%d-%H%M`.pcap")
+       # Run network trace 180s.
+       os.system("sudo tcpdump -G 180 -W 1 -w /tmp/`hostname`+`date +%Y%m%d-%H%M`.pcap")
     return count
-
 
 if __name__ == "__main__":
     main(LogFile, StateFile)

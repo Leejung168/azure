@@ -1,7 +1,17 @@
 #!/usr/bin/python
+# Start network trace when detecting 404 errors in Squid log.
+# 2019-04-25 Lambert.Li Init
+
 import os
+
+#Squid Log file location.
 LogFile = "/root/time.txt"
+
+#State file, used to store the File offset.
 StateFile = "/tmp/squid.tmp"
+
+# if the count is greater than the value below, then trigger the network trace.
+Count = 1
 
 # Check State File set
 def checkoffset(StateFile):
@@ -15,7 +25,7 @@ def checkoffset(StateFile):
         offset = 0
     return offset
 
-# Load log
+# Load log and run network capture
 def main(LogFile, StateFile):
     count = 0
     of=int(checkoffset(StateFile))
@@ -41,7 +51,8 @@ def main(LogFile, StateFile):
                print i
                count = count + 1
 
-    if count > 10:
+    print Count
+    if count > Count:
        print count
        os.system("sudo tcpdump -G 10 -W 1 -w /tmp/`hostname`+`date +%Y%m%d-%H%M`.pcap")
     return count
